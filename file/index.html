@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QR Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input {
+      padding: 8px;
+      width: 250px;
+    }
+
+    button {
+      padding: 8px 15px;
+      margin: 10px 5px;
+    }
+
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>QR Code Generator</h2>
+
+  <input id="text" type="text" placeholder="Enter text or link" />
+  <br>
+
+  <button onclick="generateQR()">Generate</button>
+  <button onclick="downloadQR()">Download</button>
+
+  <div id="qrcode"></div>
+
+  <script>
+    function generateQR() {
+      const qrDiv = document.getElementById("qrcode");
+      qrDiv.innerHTML = "";
+
+      const text = document.getElementById("text").value;
+      if (!text) {
+        alert("Enter text or link first");
+        return;
+      }
+
+      new QRCode(qrDiv, {
+        text: text,
+        width: 200,
+        height: 200
+      });
+    }
+
+    function downloadQR() {
+      const qrDiv = document.getElementById("qrcode");
+      const img = qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
+
+      if (!img) {
+        alert("Generate QR first");
+        return;
+      }
+
+      let url;
+      if (img.tagName === "IMG") {
+        url = img.src;
+      } else {
+        url = img.toDataURL("image/png");
+      }
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "qr-code.png";
+      a.click();
+    }
+  </script>
+
+</body>
+</html>
