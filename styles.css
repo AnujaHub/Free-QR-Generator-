@@ -91,6 +91,9 @@ input#text:focus {
 ================================ */
 #qrcode {
     margin-top: 1.5rem;
+    display: block !important;
+        width: 220px;
+        height: 220px;
 }
 
 #qrcode:not(:empty) {
@@ -105,9 +108,10 @@ input#text:focus {
 
 #qrcode img,
 #qrcode canvas {
-    max-width: min(70vw, 260px);
+    max-width:100%;
     height: auto;
 }
+
 /* ===============================
    BUTTON WRAPPER
 ================================ */
@@ -241,4 +245,20 @@ button:active {
     .buttons {
         align-items: center;
     }
+
+        #qrcode {
+            min-height: 280px;
+            padding: 2rem;
+        }
+    
+        #qrcode:empty::before {
+            font-size: 1rem;
+            padding: 1.5rem;
+        }
+    
+        #qrcode img,
+        #qrcode canvas {
+            max-width: 100%;
+            height: auto;
+        }
 }
