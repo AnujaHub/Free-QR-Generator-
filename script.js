@@ -77,6 +77,7 @@ function downloadQR() {
       const a = document.createElement("a");
       a.href = url;
       a.download = "qr-code.png";
+      a.target = "_blank"; // important for mobile
       a.click();
     }
 
