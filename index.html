@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" />
   <title>QR Generator</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -20,13 +20,14 @@
   <div id="qrcode"></div>
 
   <div class="buttons">
+    <div class="actions-top">
     <button id="generateBtn" onclick="generateQR()">Generate</button>
     <button id="downloadBtn" onclick="downloadQR()" style="display:none;">Download</button>
     <button id="printBtn" onclick ="printQR()" style="display:none;">Print</button>
     <button id="shareBtn" onclick="shareQRImage()" style="display:none;">Send QR</button>
-    <button id="clearBtn" onclick="clearQR()" style="display:none;">Clear</button>
   </div>
 
+   <button id="clearBtn" onclick="clearQR()" style="display:none;">Clear</button>
 </div>
   
 

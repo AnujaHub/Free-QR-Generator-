@@ -1,256 +1,244 @@
-/* Dark Theme QR Code Generator with Pink/Light Pink Accents */
-/* Modern, elegant dark mode with soft pink highlights */
-
+/* ===============================
+   THEME VARIABLES
+================================ */
 :root {
-    --bg-primary: #0f0f23;
     --bg-gradient: linear-gradient(135deg, #1a0d23 0%, #2a1a3a 100%);
     --surface: #1f1f3a;
     --surface-alt: #24243e;
-    --primary: #e24ab7;
-    /* Vibrant pink */
-    --primary-light: #f472b6;
-    /* Light pink */
-    --primary-hover: #d490e9;
-    /* Darker pink hover */
-    --secondary: #6b7280;
-    --secondary-hover: #9ca3af;
+
+    --primary: rgb(202, 161, 234);
+    --primary-soft: rgba(202, 161, 234, 0.15);
+
     --text-primary: #f9fafb;
     --text-secondary: #d1d5db;
-    --border-color: #374151;
-    --border-light: #4b5563;
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 10px 10px -5px rgb(0 0 0 / 0.3);
-    --border-radius: 12px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --border: rgba(255, 255, 255, 0.12);
+
+    --radius: 14px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.45);
 }
 
-* {
+/* ===============================
+   RESET & BASE
+================================ */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: var(--bg-gradient);
-    min-height: 100vh;
     margin: 0;
-    padding: 2rem 1rem;
-    text-align: center;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    background: var(--bg-gradient);
     color: var(--text-primary);
-    line-height: 1.6;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
 }
 
-
-h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: rgb(202, 161, 234);
-}
-
-input#text {
-    padding: 1.2rem;
+/* ===============================
+   MAIN CONTAINER
+================================ */
+.main {
     width: 100%;
-    max-width: 380px;
-    font-size: 1.1rem;
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius);
+    max-width: 520px;
+    text-align: center;
+}
+
+/* ===============================
+   HEADING
+================================ */
+h2 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* ===============================
+   INPUT
+================================ */
+input#text {
+    width: 100%;
+    padding: 1rem 1.1rem;
+    font-size: 16px;
+    /* prevents mobile zoom */
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
     background: var(--surface-alt);
     color: var(--text-primary);
+    outline: none;
+    transition: var(--transition);
 }
 
+input#text::placeholder {
+    color: var(--text-secondary);
+}
 
-.buttons {
-    gap: 1rem;
-    margin: 2rem 0;
+input#text:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+/* ===============================
+   QR CONTAINER
+================================ */
+#qrcode {
+    margin-top: 1.5rem;
+}
+
+#qrcode:not(:empty) {
+    background: var(--surface-alt);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 1.5rem;
     display: flex;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+}
+
+#qrcode img,
+#qrcode canvas {
+    max-width: min(70vw, 260px);
+    height: auto;
+}
+/* ===============================
+   BUTTON WRAPPER
+================================ */
+.buttons {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+}
+
+/* ===============================
+   TOP ACTION BUTTONS
+================================ */
+.actions-top {
+    display: flex;
+    gap: 0.7rem;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+/* ===============================
+   BASE BUTTON STYLE
+================================ */
 button {
-    padding: 0.875rem 1.75rem;
-    font-size: 0.95rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    border-radius: var(--radius);
     border: none;
-    border-radius: var(--border-radius);
     cursor: pointer;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     transition: var(--transition);
     box-shadow: var(--shadow-md);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    backdrop-filter: blur(10px);
+    width: auto;
+    /* 🔑 prevents stretching */
 }
 
-button:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: var(--shadow-lg);
+button:active {
+    transform: scale(0.97);
 }
 
+/* ===============================
+   GENERATE BUTTON (COMPACT)
+================================ */
 #generateBtn {
-    background: rgb(202, 161, 234);
-    color: var(--surface);
+    margin-top: 1.4rem;
+    padding: 0.75rem 1.4rem;
+    font-size: 0.85rem;
+    background: var(--primary);
+    color: #1f1f3a;
 }
 
-#downloadBtn,
-#printBtn,
+#generateBtn:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* ===============================
+   SECONDARY BUTTONS
+================================ */
 #shareBtn,
-#clearBtn {
-    background: rgba(107, 114, 128, 0.3);
+#downloadBtn,
+#printBtn {
+    background: rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
-    border: 1px solid var(--surface);
-    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
 }
 
-#downloadBtn:hover,
-#printBtn:hover,
 #shareBtn:hover,
+#downloadBtn:hover,
+#printBtn:hover {
+    background: var(--primary);
+    color: #1f1f3a;
+}
+
+/* ===============================
+   CLEAR BUTTON (SEPARATE + SUBTLE)
+================================ */
+#clearBtn {
+    padding: 0.55rem 1.3rem;
+    font-size: 0.75rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px dashed var(--border);
+}
+
 #clearBtn:hover {
-    background: rgb(202, 161, 234);
-    color: var(--surface);
-    
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
 }
 
-/* Style changes when QR is generated (no longer empty) */
-#qrcode:not(:empty) {
+/* ===============================
+   MOBILE BUTTON BEHAVIOR (FIXED)
+================================ */
+@media (max-width: 480px) {
 
-    border-style: solid;
-    border-color: rgb(202, 161, 234);
-    border-width: 3px;
-    min-height: auto;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    border-radius: var(--border-radius);
-    margin-top: 1rem;
-    background: var(--surface-alt);
-}
-
-/* Responsive Design */
-@media (max-width: 640px) {
-
-
-    body {
-        padding: 1.5rem 1rem;
-    }
-
-    h2 {
-        font-size: 2.2rem;
-    }
-
-     input#text {
-            font-size: 16px;
-            /* prevents mobile zoom on focus */
-    }
-
-    .buttons {
+    /* Stack buttons vertically */
+    .actions-top {
         flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    button {
+        align-items: center;
         width: 100%;
-        max-width: 280px;
     }
 
-    #qrcode {
-        min-height: 280px;
-        padding: 2rem;
+    /* Keep buttons compact */
+    .actions-top button {
+        width: fit-content;
+        padding: 0.55rem 1rem;
+        font-size: 0.75rem;
+        text-align: center;
     }
 
-    #qrcode:empty::before {
-        font-size: 1rem;
-        padding: 1.5rem;
-    }
-        #qrcode img,
-        #qrcode canvas {
-            max-width: 100%;
-            height: auto;
-        }
-}
-
-/* Smooth animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
+    /* Generate button */
+    #generateBtn {
+        width: fit-content;
+        padding: 0.7rem 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* ---------- Universal Mobile Improvements ---------- */
-
-/* Safer layout on all phones */
-@media (max-width: 768px) {
-
-    body {
-        padding: 1rem;
-        max-width: 100%;
+    /* Clear button */
+    #clearBtn {
+        width: fit-content;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.72rem;
     }
 
-    h2 {
-        font-size: clamp(1.8rem, 5vw, 2.2rem);
-        margin-bottom: 1.2rem;
-    }
-
-    input#text {
-        max-width: 100%;
-        padding: 0.9rem;
-        font-size: 16px;
-        /* no zoom on mobile */
-    }
-
+    /* Center everything */
     .buttons {
-        flex-direction: column;
-        gap: 0.6rem;
-        margin: 1.2rem 0;
+        align-items: center;
     }
-
-    button {
-        width: 100%;
-        max-width: 100%;
-        padding: 0.9rem;
-        font-size: 0.9rem;
-    }
-
-    #qrcode:not(:empty) {
-        padding: 1rem;
-    }
-
-    #qrcode img,
-    #qrcode canvas {
-        width: min(70vw, 240px);
-        height: auto;
-    }
-}
-
-/* Very small phones */
-@media (max-width: 360px) {
-
-    h2 {
-        font-size: 1.6rem;
-    }
-
-    button {
-        font-size: 0.85rem;
-        padding: 0.75rem;
-    }
-
-    #qrcode img,
-    #qrcode canvas {
-        width: 200px;
-    }
-}
-.buttons,
-#qrcode,
-input#text {
-    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
