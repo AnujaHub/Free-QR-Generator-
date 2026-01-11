@@ -39,11 +39,6 @@ document.getElementById("printBtn").style.display = "inline-block";
 document.getElementById("shareBtn").style.display = "inline-block";
 document.getElementById("clearBtn").style.display = "inline-block";
 
-
-      document.getElementById("downloadBtn").style.display = "inline-block";
-      document.getElementById("printBtn").style.display = "inline-block";
-      document.getElementById("shareBtn").style.display = "inline-block";
-      document.getElementById("clearBtn").style.display = "inline-block";
     }
   
 function isValidURL(value){
@@ -67,12 +62,7 @@ function downloadQR() {
         return;
       }
 
-      let url;
-      if (img.tagName === "IMG") {
-        url = img.src;
-      } else {
-        url = img.toDataURL("image/png");
-      }
+      const url = img.tagName === "IMG" ? img.src : img.toDataURL("image/png");
 
       const a = document.createElement("a");
       a.href = url;
