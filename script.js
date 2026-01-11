@@ -44,7 +44,7 @@ document.getElementById("clearBtn").style.display = "inline-block";
 function isValidURL(value){
     if (!value) return "empty";
 
-    const urlRegex = /^(https?:\/\/|www\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/i;
+    const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
 
     if (!urlRegex.test(value)) return "invalid";
 

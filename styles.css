@@ -91,9 +91,8 @@ input#text:focus {
 ================================ */
 #qrcode {
     margin-top: 1.5rem;
-    display: block !important;
-        width: 220px;
-        height: 220px;
+    display: block ;
+    padding: 0;
 }
 
 #qrcode:not(:empty) {
@@ -101,6 +100,7 @@ input#text:focus {
     border: 2px solid var(--primary);
     border-radius: var(--radius);
     padding: 1.5rem;
+    height: auto;
     display: flex;
     justify-content: center;
     box-shadow: var(--shadow-md);
@@ -148,7 +148,7 @@ button {
     transition: var(--transition);
     box-shadow: var(--shadow-md);
     width: auto;
-    /* 🔑 prevents stretching */
+   
 }
 
 button:active {
@@ -159,7 +159,6 @@ button:active {
    GENERATE BUTTON (COMPACT)
 ================================ */
 #generateBtn {
-    margin-top: 1.4rem;
     padding: 0.75rem 1.4rem;
     font-size: 0.85rem;
     background: var(--primary);
@@ -245,20 +244,31 @@ button:active {
     .buttons {
         align-items: center;
     }
+    .actions-top{
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+       
+    }
 
-        #qrcode {
-            min-height: 280px;
-            padding: 2rem;
+      #qrcode {
+            min-height: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     
-        #qrcode:empty::before {
-            font-size: 1rem;
-            padding: 1.5rem;
-        }
+         #qrcode:empty::before {
+             font-size: 1rem;
+             padding: 1.5rem;
+         }
     
         #qrcode img,
         #qrcode canvas {
-            max-width: 100%;
+            width: 200px;
             height: auto;
         }
 }
