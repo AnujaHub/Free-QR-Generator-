@@ -1,8 +1,28 @@
-# Free-QR-Generator-
+# QR Code Generator
 
-This tools helps you generate free QRs and also download them . 
-All the user needs to do is enter the link/content to be redirected to once the Qr is scanned . 
+A responsive QR Code Generator built using HTML, CSS and JavaScript.
 
-p.s 
-this is an impromptu project :P
-i couldn't find a relaible source to generate a free & long time qr so ended up making mine
+## Features
+- Generate QR codes instantly
+- Download QR as PNG
+- Print QR codes
+- Share QR directly
+- Persistent QR state using localStorage
+- Keyboard shortcuts
+- QR color customization
+- Responsive mobile-friendly UI
+
+## Tech Stack
+- HTML5
+- CSS3
+- JavaScript
+- QRCode.js
+
+## Live Demo
+
+
+## Keyboard Shortcuts
+- Enter → Generate QR
+- Esc → Clear QR
+- Ctrl/Cmd + S → Download
+- Ctrl/Cmd + P → Print
