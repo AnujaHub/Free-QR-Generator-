@@ -29,16 +29,36 @@ function getQRImage() {
     return qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
 }
 
+// colors 
+const qrColorInput = document.getElementById("qrColor");
+const bgColorInput = document.getElementById("bgColor");
+const customizationPanel = document.getElementById("customizationPanel");
+
+
 function createQRCode(text) {
   qrDiv.innerHTML = "";
 
   new QRCode(qrDiv, {
-    text: text,
-    width: 200,
-    height: 200,
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  text: text,
+  width: 200,
+  height: 200,
+  colorDark: qrColorInput.value,
+  colorLight: bgColorInput.value,
+  correctLevel: QRCode.CorrectLevel.M
+});
 }
+
+qrColorInput.addEventListener("input", () => {
+  if (appState.qrGenerated) {
+    createQRCode(appState.qrText);
+  }
+});
+
+bgColorInput.addEventListener("input", () => {
+  if (appState.qrGenerated) {
+    createQRCode(appState.qrText);
+  }
+});
 
 function renderQRFromState() {
 
@@ -61,6 +81,9 @@ function toggleButtons(showQRControls) {
 
     clearBtn.style.display =
         showQRControls ? "inline-block" : "none";
+
+    customizationPanel.style.display =
+        showQRControls ? "flex" : "none";
 }
 
 function generateQR() {
