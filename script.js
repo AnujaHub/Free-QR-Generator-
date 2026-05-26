@@ -1,87 +1,141 @@
 
+// adding state management 
+const appState = {
+    qrGenerated: false,
+    qrText: "",
+};
+
+
+const qrDiv = document.getElementById("qrcode");
+const textInput = document.getElementById("text");
+
+const generateBtn = document.getElementById("generateBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const printBtn = document.getElementById("printBtn");
+const shareBtn = document.getElementById("shareBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+const errorMessage = document.getElementById("errorMessage");
+
+function showError(message) {
+  errorMessage.textContent = message;
+}
+
+function clearError() {
+  errorMessage.textContent = "";
+}
+
+function getQRImage() {
+    return qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
+}
+
+function createQRCode(text) {
+  qrDiv.innerHTML = "";
+
+  new QRCode(qrDiv, {
+    text: text,
+    width: 200,
+    height: 200,
+    correctLevel: QRCode.CorrectLevel.M
+  });
+}
+
+function renderQRFromState() {
+
+    createQRCode(appState.qrText);
+}
+
+function toggleButtons(showQRControls) {
+
+    generateBtn.style.display =
+        showQRControls ? "none" : "inline-block";
+
+    downloadBtn.style.display =
+        showQRControls ? "inline-block" : "none";
+
+    printBtn.style.display =
+        showQRControls ? "inline-block" : "none";
+
+    shareBtn.style.display =
+        showQRControls ? "inline-block" : "none";
+
+    clearBtn.style.display =
+        showQRControls ? "inline-block" : "none";
+}
+
 function generateQR() {
-      const qrDiv = document.getElementById("qrcode");
-      qrDiv.innerHTML = "";
 
-      let text = document.getElementById("text").value.trim();
-      
-      const result = isValidURL(text);
+    textInput.value = textInput.value.trim();
 
+    const result = isValidURL(textInput.value);
 
-      if (result === "empty") {
-        alert("Please enter a link");
+    if (result === "empty") {
+        showError("Please enter a link");
         return;
-      }
-
-      if (result === "too_long") {
-         alert("This link is quite long. The QR code may be dense and harder to scan on some devices. Consider using a shorter link if possible.");
-      }
-
-      if (result === "invalid") {
-        alert("Enter a valid link (http, https or www)");
-        return;
-      }
-
-
-      new QRCode(qrDiv, {
-        text: text,
-        width: 200,
-        height: 200,
-        correctLevel: QRCode.CorrectLevel.M // improves scan reliability
-      });
-
-// to hide generate btn
-document.getElementById("generateBtn").style.display = "none";
-
-// Show action btns
-document.getElementById("downloadBtn").style.display = "inline-block";
-document.getElementById("printBtn").style.display = "inline-block";
-document.getElementById("shareBtn").style.display = "inline-block";
-document.getElementById("clearBtn").style.display = "inline-block";
-
     }
-  
-function isValidURL(value){
+
+    if (result === "too_long") {
+        showError("This link is quite long. The QR code may be dense and harder to scan on some devices. Consider using a shorter link if possible.");
+    }
+
+    if (result === "invalid") {
+        showError("Enter a valid link (http, https or www)");
+        return;
+    }
+
+
+    createQRCode(textInput.value);
+
+    appState.qrGenerated = true;
+    appState.qrText = textInput.value;
+
+    localStorage.setItem("qrState", JSON.stringify(appState));
+
+    clearError();
+    toggleButtons(true);
+
+}
+
+function isValidURL(value) {
     if (!value) return "empty";
 
     const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
 
     if (!urlRegex.test(value)) return "invalid";
 
-    if(value.length>250) return "too_long";
+    if (value.length > 250) return "too_long";
 
-    return "ok"; 
+    return "ok";
 }
 
 function downloadQR() {
-      const qrDiv = document.getElementById("qrcode");
-      const img = qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
+    const img = getQRImage();
 
-      if (!img) {
-        alert("Generate QR first");
+    if (!img) {
+        showError("Generate QR first");
         return;
-      }
-
-      const url = img.tagName === "IMG" ? img.src : img.toDataURL("image/png");
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "qr-code.png";
-      a.target = "_blank"; // important for mobile
-      a.click();
     }
 
-    function printQR() {
-  const qrDiv = document.getElementById("qrcode");
-  const img = qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
+    const url = img.tagName === "IMG" ? img.src : img.toDataURL("image/png");
 
-  if (!img) return;
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "qr-code.png";
+    a.target = "_blank"; // important for mobile
+    a.click();
+}
 
-  const src =
-    img.tagName === "IMG" ? img.src : img.toDataURL("image/png");
+function printQR() {
 
-  const win = window.open("", "_blank");
-  win.document.write(`
+    const img = getQRImage();
+
+    if (!img) return;
+
+    const src =
+        img.tagName === "IMG" ? img.src : img.toDataURL("image/png");
+
+    const win = window.open("", "_blank");
+    win.document.write(`
     <html>
       <head>
         <title>Print QR</title>
@@ -107,95 +161,123 @@ function downloadQR() {
       </body>
     </html>
   `);
-  win.document.close();
+    win.document.close();
 }
 
 
 async function shareQRImage() {
-  const qrDiv = document.getElementById("qrcode");
-  const img = qrDiv.querySelector("img") || qrDiv.querySelector("canvas");
 
-  if (!img) return;
+    const img = getQRImage();
 
-  let blob;
-  if (img.tagName === "IMG") {
-    const res = await fetch(img.src);
-    blob = await res.blob();
-  } else {
-    blob = await new Promise(r => img.toBlob(r, "image/png"));
-  }
+    if (!img) return;
 
-  const file = new File([blob], "qr-code.png", { type: "image/png" });
+    let blob;
+    if (img.tagName === "IMG") {
+        const res = await fetch(img.src);
+        blob = await res.blob();
+    } else {
+        blob = await new Promise(r => img.toBlob(r, "image/png"));
+    }
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    navigator.share({
-      files: [file],
-      title: "QR Code",
-      text: "Here’s a QR code"
-    });
-  } else {
-    alert("Sharing not supported. Please download instead.");
-  }
+    const file = new File([blob], "qr-code.png", { type: "image/png" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({
+            files: [file],
+            title: "QR Code",
+            text: "Here’s a QR code"
+        });
+    } else {
+        showError("Sharing not supported. Please download instead.");
+    }
 }
 
-function clearQR() {
-  document.getElementById("qrcode").innerHTML = "";
-  document.getElementById("text").value = "";
 
-  document.getElementById("generateBtn").style.display = "inline-block";
-  document.getElementById("downloadBtn").style.display = "none";
-  document.getElementById("printBtn").style.display = "none";
-  document.getElementById("shareBtn").style.display = "none";
-  document.getElementById("clearBtn").style.display = "none";
+function clearQR() {
+    clearError();
+    qrDiv.innerHTML = "";
+    textInput.value = "";
+
+    toggleButtons(false);
+
+    appState.qrGenerated = false;
+    appState.qrText = "";
+
+    localStorage.removeItem("qrState");
+
 }
 
 // adding keyboard shortcuts
 document.addEventListener("keydown", (e) => {
-  const hasQR = document.getElementById("qrcode").children.length > 0;
+    const hasQR = appState.qrGenerated;
 
-  // ENTER → Generate QR
-  if (e.key === "Enter") {
-    const generateBtn = document.getElementById("generateBtn");
-    if (generateBtn.style.display !== "none") {
-      generateQR();
+
+    // ENTER → Generate QR
+    if (e.key === "Enter") {
+        clearError();
+        if (generateBtn.style.display !== "none") {
+            generateQR();
+        }
     }
-  }
 
-  // ESC → Clear QR
-  if (e.key === "Escape" && hasQR) {
-    clearQR();
-  }
+    // ESC → Clear QR
+    if (e.key === "Escape" && hasQR) {
+        clearQR();
+    }
 
-  // CTRL / CMD + S → Download QR
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s" && hasQR) {
-    e.preventDefault();
-    downloadQR();
-  }
+    // CTRL / CMD + S → Download QR
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s" && hasQR) {
+        e.preventDefault();
+        downloadQR();
+    }
 
-  // CTRL / CMD + P → Print QR
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p" && hasQR) {
-    e.preventDefault();
-    printQR();
-  }
+    // CTRL / CMD + P → Print QR
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p" && hasQR) {
+        e.preventDefault();
+        printQR();
+    }
 
-  // CTRL / CMD + SHIFT + S → Share QR
-  if (
-    (e.ctrlKey || e.metaKey) &&
-    e.shiftKey &&
-    e.key.toLowerCase() === "s" &&
-    hasQR
-  ) {
-    e.preventDefault();
-    shareQRImage();
-  }
+    // CTRL / CMD + SHIFT + S → Share QR
+    if (
+        (e.ctrlKey || e.metaKey) &&
+        e.shiftKey &&
+        e.key.toLowerCase() === "s" &&
+        hasQR
+    ) {
+        e.preventDefault();
+        shareQRImage();
+    }
 });
 
 
 
-document.getElementById("text").addEventListener("input", () => {
-  document.getElementById("generateBtn").style.display = "inline-block";
-  document.getElementById("downloadBtn").style.display = "none";
-  document.getElementById("printBtn").style.display = "none";
-  document.getElementById("shareBtn").style.display = "none";
-  document.getElementById("clearBtn").style.display = "none";
+textInput.addEventListener("input", () => {
+    clearError();
+    toggleButtons(false);
 });
+
+
+window.addEventListener("load", () => {
+    const saved = localStorage.getItem("qrState");
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    appState.qrGenerated = state.qrGenerated;
+    appState.qrText = state.qrText;
+
+    if (appState.qrGenerated) {
+        textInput.value = appState.qrText;
+        renderQRFromState();
+    }
+});
+
+
+generateBtn.addEventListener("click", generateQR);
+
+downloadBtn.addEventListener("click", downloadQR);
+
+printBtn.addEventListener("click", printQR);
+
+shareBtn.addEventListener("click", shareQRImage);
+
+clearBtn.addEventListener("click", clearQR);
