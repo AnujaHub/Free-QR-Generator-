@@ -19,7 +19,7 @@ A responsive QR Code Generator built using HTML, CSS and JavaScript.
 - QRCode.js
 
 ## Live Demo
-
+https://anujahub.github.io/Free-QR-Generator-/
 
 ## Keyboard Shortcuts
 - Enter → Generate QR
