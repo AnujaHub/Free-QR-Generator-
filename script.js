@@ -3,7 +3,10 @@
 const appState = {
     qrGenerated: false,
     qrText: "",
+    qrColor: "#000000",
+    bgColor: "#ffffff"
 };
+
 
 
 const qrDiv = document.getElementById("qrcode");
@@ -17,12 +20,15 @@ const clearBtn = document.getElementById("clearBtn");
 
 const errorMessage = document.getElementById("errorMessage");
 
+
 function showError(message) {
   errorMessage.textContent = message;
+  errorMessage.style.display = "block";
 }
 
 function clearError() {
   errorMessage.textContent = "";
+  errorMessage.style.display = "none";
 }
 
 function getQRImage() {
@@ -42,19 +48,29 @@ function createQRCode(text) {
   text: text,
   width: 200,
   height: 200,
-  colorDark: qrColorInput.value,
-  colorLight: bgColorInput.value,
+  colorDark: appState.qrColor,
+  colorLight: appState.bgColor,
   correctLevel: QRCode.CorrectLevel.M
 });
 }
 
 qrColorInput.addEventListener("input", () => {
+
+  appState.qrColor = qrColorInput.value;
+
+  localStorage.setItem("qrState", JSON.stringify(appState));
+
   if (appState.qrGenerated) {
     createQRCode(appState.qrText);
   }
 });
 
 bgColorInput.addEventListener("input", () => {
+
+  appState.bgColor = bgColorInput.value;
+
+  localStorage.setItem("qrState", JSON.stringify(appState));
+
   if (appState.qrGenerated) {
     createQRCode(appState.qrText);
   }
@@ -285,15 +301,22 @@ window.addEventListener("load", () => {
     if (!saved) return;
 
     const state = JSON.parse(saved);
+
     appState.qrGenerated = state.qrGenerated;
     appState.qrText = state.qrText;
+
+    appState.qrColor = state.qrColor || "#000000";
+    appState.bgColor = state.bgColor || "#ffffff";
+
+    qrColorInput.value = appState.qrColor;
+    bgColorInput.value = appState.bgColor;
 
     if (appState.qrGenerated) {
         textInput.value = appState.qrText;
         renderQRFromState();
+        toggleButtons(true);
     }
 });
-
 
 generateBtn.addEventListener("click", generateQR);
 

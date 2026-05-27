@@ -2,23 +2,23 @@
    THEME VARIABLES
 ================================ */
 :root {
-    --bg-gradient: linear-gradient(135deg, #1a0d23 0%, #2a1a3a 100%);
-    --surface: #1f1f3a;
-    --surface-alt: #24243e;
+  --bg-gradient: linear-gradient(135deg, #1a0d23 0%, #2a1a3a 100%);
+  --surface: #1f1f3a;
+  --surface-alt: #24243e;
 
-    --primary: rgb(202, 161, 234);
-    --primary-soft: rgba(202, 161, 234, 0.15);
+  --primary: rgb(202, 161, 234);
+  --primary-soft: rgba(202, 161, 234, 0.15);
 
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
 
-    --border: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.12);
 
-    --radius: 14px;
-    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 14px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.45);
 }
 
 /* ===============================
@@ -27,159 +27,151 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
-    background: var(--bg-gradient);
-    color: var(--text-primary);
-    display: flex;
-    justify-content: center;
-    padding: clamp(1rem, 4vw, 2rem);
+  margin: 0;
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
 }
 
 /* ===============================
    MAIN CONTAINER
 ================================ */
 .main {
-    width: 100%;
-    max-width: 520px;
-    text-align: center;
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
 }
 
 /* ===============================
    HEADING
 ================================ */
 h2 {
-    margin-bottom: 1.5rem;
-    font-size: clamp(1.8rem, 5vw, 2.4rem);
-    font-weight: 700;
-    color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--primary);
 }
 
 /* ===============================
    INPUT
 ================================ */
 input#text {
-    width: 100%;
-    padding: 1rem 1.1rem;
-    font-size: 16px;
-    /* prevents mobile zoom */
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--surface-alt);
-    color: var(--text-primary);
-    outline: none;
-    transition: var(--transition);
+  width: 100%;
+  padding: 1rem 1.1rem;
+  font-size: 16px;
+  /* prevents mobile zoom */
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
 }
 
 input#text::placeholder {
-    color: var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 input#text:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-soft);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
 /* ===============================
    QR CONTAINER
 ================================ */
 #qrcode {
-    margin-top: 1.5rem;
-    display: block ;
-    padding: 0;
+  margin-top: 1.5rem;
+  display: block;
+  padding: 0;
 }
 
 #qrcode:not(:empty) {
-    background: var(--surface-alt);
-    border: 2px solid var(--primary);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    animation: fadeInScale 0.4s ease-out;
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  background: var(--surface-alt);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
 }
 
 #qrcode img,
 #qrcode canvas {
-    max-width:100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* ===============================
    BUTTON WRAPPER
 ================================ */
 .buttons {
-    margin-top: 1.6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    align-items: center;
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
 }
 
 /* ===============================
    TOP ACTION BUTTONS
 ================================ */
 .actions-top {
-    display: flex;
-    gap: 0.7rem;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* ===============================
    BASE BUTTON STYLE
 ================================ */
 button {
-    padding: 0.6rem 1.1rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: var(--transition);
-    box-shadow: var(--shadow-md);
-    width: auto;
-   
+  padding: 0.6rem 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  box-shadow: var(--shadow-md);
+  width: auto;
 }
 
 button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 /* ===============================
    GENERATE BUTTON (COMPACT)
 ================================ */
 #generateBtn {
-    padding: 0.75rem 1.4rem;
-    font-size: 0.85rem;
-    background: var(--primary);
-    color: #1f1f3a;
+  padding: 0.75rem 1.4rem;
+  font-size: 0.85rem;
+  background: var(--primary);
+  color: #1f1f3a;
 }
 
 #generateBtn:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 /* ===============================
@@ -188,155 +180,180 @@ button:active {
 #shareBtn,
 #downloadBtn,
 #printBtn {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
 }
 
 #shareBtn:hover,
 #downloadBtn:hover,
-#printBtn:hover{
-    background: var(--primary);
-    color: #1f1f3a;
+#printBtn:hover {
+  background: var(--primary);
+  color: #1f1f3a;
 }
 
 /* ===============================
    CLEAR BUTTON (SEPARATE + SUBTLE)
 ================================ */
 #clearBtn {
-    padding: 0.55rem 1.3rem;
-    font-size: 0.75rem;
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px dashed var(--border);
+  padding: 0.55rem 1.3rem;
+  font-size: 0.75rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border);
 }
 
 #clearBtn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
 }
-
 
 /* ===============================
    CUSTOMIZATION PANEL (STYLED LIKE BUTTONS)
 ================================ */
 .customization {
-    display: flex;
-    gap: 0.7rem;
-    justify-content: center;
-    padding: 0.6rem 1.1rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    width: auto;
-    align-items: center;
+  display: none;
+  gap: 0.7rem;
+  justify-content: center;
+  padding: 0.6rem 1.1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  width: auto;
+  align-items: center;
 }
 
 .customization:hover {
-    background: var(--primary-soft);
-    border-color: var(--primary);
+  background: var(--primary-soft);
+  border-color: var(--primary);
 }
 
 .customization label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    cursor: pointer;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  cursor: pointer;
+  margin: 0;
 }
 
 .customization input[type="color"] {
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition);
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) / 2);
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .customization input[type="color"]:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary-soft);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-soft);
+}
+
+/* warnings */
+
+#errorMessage {
+  display: none;
+  min-height: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #ffb4b4;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem;
+
+  background: rgba(255, 90, 90, 0.12);
+  border: 1px solid rgba(255, 120, 120, 0.3);
+
+  border-radius: 10px;
+
+  color: #ebdede;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  text-align: center;
+
+  backdrop-filter: blur(8px);
+}
+
+#errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 /* ===============================
    MOBILE BUTTON BEHAVIOR (FIXED)
 ================================ */
 @media (max-width: 480px) {
+  /* Stack buttons vertically */
+  .actions-top {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
-    /* Customization panel mobile padding */
-    .customization {
-        padding: 0.6rem 0.7rem;
-        gap: 0.5rem;
-    }
+  /* Keep buttons compact */
+  .actions-top button {
+    width: fit-content;
+    padding: 0.55rem 1rem;
+    font-size: 0.75rem;
+    text-align: center;
+  }
 
-    /* Stack buttons vertically */
-    .actions-top {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
+  /* Generate button */
+  #generateBtn {
+    width: fit-content;
+    padding: 0.7rem 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    /* Keep buttons compact */
-    .actions-top button {
-        width: fit-content;
-        padding: 0.55rem 1rem;
-        font-size: 0.75rem;
-        text-align: center;
-    }
+  /* Clear button */
+  #clearBtn {
+    width: fit-content;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.72rem;
+  }
 
-    /* Generate button */
-    #generateBtn {
-        width: fit-content;
-        padding: 0.7rem 1.2rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
+  /* Center everything */
+  .buttons {
+    align-items: center;
+  }
+  .actions-top {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
 
-    /* Clear button */
-    #clearBtn {
-        width: fit-content;
-        padding: 0.5rem 1.2rem;
-        font-size: 0.72rem;
-    }
+  #qrcode {
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    /* Center everything */
-    .buttons {
-        align-items: center;
-    }
-    .actions-top{
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.7rem;
-       
-    }
+  #qrcode:empty::before {
+    font-size: 1rem;
+    padding: 1.5rem;
+  }
 
-      #qrcode {
-            min-height: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    
-         #qrcode:empty::before {
-             font-size: 1rem;
-             padding: 1.5rem;
-         }
-    
-        #qrcode img,
-        #qrcode canvas {
-            width: 200px;
-            height: auto;
-        }
+  #qrcode img,
+  #qrcode canvas {
+    width: 200px;
+    height: auto;
+  }
 }
